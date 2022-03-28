@@ -13,9 +13,9 @@ class SeoulAirQualityApiCallerTest {
     SeoulAirQualityApiCaller seoulAirQualityApiCaller;
 
     @Test
-    public void 서울_대기질_조회_API_호출() {
+    public void 서울_대기질_조회_API_호출(String gu) {
         // when
-        var response = seoulAirQualityApiCaller.getAirQuality();
+        var response = seoulAirQualityApiCaller.getAirQuality(gu);
 
         // then
         assertNotNull(response);
