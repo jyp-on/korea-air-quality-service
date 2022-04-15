@@ -13,7 +13,7 @@ class SeoulAirQualityApiCallerTest {
     SeoulAirQualityApiCaller seoulAirQualityApiCaller;
 
     @Test
-    public void 서울_대기질_조회_API_호출(String gu) {
+    public void 서울_대기질_조회_API_호출() {
         // when
         var response = seoulAirQualityApiCaller.getAirQuality();
 

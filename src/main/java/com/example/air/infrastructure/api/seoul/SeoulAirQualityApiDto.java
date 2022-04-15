@@ -13,9 +13,7 @@ public class SeoulAirQualityApiDto {
     @Setter
     @ToString
     public static class GetAirQualityResponse {
-        // @JsonProperty는 파라미터를 내가 원하는 변수명으로 맵핑하고 싶은 경우 사용
-        // RealtimeCityAir -> response
-        @JsonProperty("RealtimeCityAir")
+        @JsonProperty("DailyAverageCityAir")
         private Response response;
     }
 
@@ -54,7 +52,7 @@ public class SeoulAirQualityApiDto {
         private String area;
         @JsonProperty("MSRSTE_NM")
         private String site;
-        @JsonProperty("MSRDT")
+        @JsonProperty("MSRDT_DE")
         private String measurementTime;
         @JsonProperty("SO2")
         private Double so2;

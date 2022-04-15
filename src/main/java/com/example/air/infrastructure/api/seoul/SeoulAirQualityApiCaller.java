@@ -70,7 +70,7 @@ public class SeoulAirQualityApiCaller {
         return AirQualityInfo.builder()
                 .sido(Sido.seoul.getDescription())
                 .sidoPm10Avg(sidoPm10Avg)
-                .sidoPm10AvgGrade(String.valueOf(sidoPm10AvgGrade))
+                .sidoPm10AvgGrade(sidoPm10AvgGrade)
                 .guList(guList)
                 .build();
     }
