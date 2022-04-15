@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 public class AirQualityService {
     private final SeoulAirQualityApiCaller seoulAirQualityApiCaller;
 
-    public AirQualityInfo getAirQualityInfo(String gu) {
+    public AirQualityInfo getAirQualityInfo(Sido sido, String gu) {
+        if (sido == Sido.seoul) {
+            var airQualityInfo = seoulAirQualityApiCaller.getAirQuality();
+            if (gu != null) {
+                return airQualityInfo.searchByGu(gu);
+            }
+            return airQualityInfo;
+        }
 
-            AirQualityInfo airQualityInfo = seoulAirQualityApiCaller.getAirQuality(gu);
-
-        // TODO: 자치구 검색 로직 추가 (시간 남는 경우)
-        return airQualityInfo;
+        throw new RuntimeException(sido + " 대기질 정보는 아직 준비중입니다.");
     }
 }
