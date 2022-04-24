@@ -1,6 +1,7 @@
 package com.example.air.infrastructure.api.seoul;
 
 import com.example.air.application.AirQualityInfo;
+import com.example.air.application.CallerService;
 import com.example.air.application.Sido;
 import com.example.air.application.util.AirQualityGradeUtil;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class SeoulAirQualityApiCaller {
+public class SeoulAirQualityApiCaller implements CallerService {
     private final SeoulAirQualityApi seoulAirQualityApi;
 
     public SeoulAirQualityApiCaller(@Value("${api.seoul.base-url}") String baseUrl) {
@@ -34,6 +36,12 @@ public class SeoulAirQualityApiCaller {
         this.seoulAirQualityApi = retrofit.create(SeoulAirQualityApi.class);
     }
 
+    @Override
+    public Sido getSido(){
+        return Sido.seoul;
+    }
+
+    @Override
     public AirQualityInfo getAirQuality() {
         try {
             String date = getDateAnHourAgo();

@@ -4,7 +4,6 @@ import com.example.air.application.AirQualityInfo;
 import com.example.air.application.CallerService;
 import com.example.air.application.Sido;
 import com.example.air.application.util.AirQualityGradeUtil;
-import com.example.air.infrastructure.api.seoul.SeoulAirQualityApiDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class BusanAirQualityApiCaller{
+public class BusanAirQualityApiCaller implements CallerService {
     private final BusanAirQualityApi busanAirQualityApi;
 
     public BusanAirQualityApiCaller(@Value("${api.busan.base-url}") String baseUrl) {
@@ -35,6 +34,12 @@ public class BusanAirQualityApiCaller{
         this.busanAirQualityApi = retrofit.create(BusanAirQualityApi.class);
     }
 
+    @Override
+    public Sido getSido(){
+        return Sido.busan;
+    }
+
+    @Override
     public AirQualityInfo getAirQuality() {
         try {
             var call = busanAirQualityApi.getAirQuality();
