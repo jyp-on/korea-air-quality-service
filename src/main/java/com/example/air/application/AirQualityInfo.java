@@ -26,8 +26,8 @@ public class AirQualityInfo {
 
     private GuAirQualityInfo searchGuAirQualityInfo(String gu) {
         return guList.stream()
-                .filter(guAirQualityInfo -> guAirQualityInfo.getGu().equals(gu))
-                .findFirst()
+                .filter(guAirQualityInfo -> guAirQualityInfo.getGu().equals(gu)) //인자값인 gu와 같은게 있는지 확인
+                .findFirst() // 같은게 있으면 그 guList return
                 .orElseThrow(() -> new IllegalArgumentException(gu + "에 해당하는 자치구가 존재하지 않습니다."));
     }
 

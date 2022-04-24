@@ -14,13 +14,13 @@ public class BusanAirQualityApiDto {
     @ToString
     public static class GetAirQualityResponse {
         @JsonProperty("getAirQualityInfoClassifiedByStation")
-        private Response response;
+        private Response response; //이걸 최종적으로 return
     }
 
     @Getter
     @Setter
     @ToString
-    public static class Response {
+    public static class Response { //return 할 객체 생성자
         private Header header;
         @JsonProperty("item")
         private List<Item> items;
@@ -55,17 +55,17 @@ public class BusanAirQualityApiDto {
         private String repItem;
         private String repVal;
         private String repCai;
-        private String so2;
+        private Double so2;
         private String so2Cai;
-        private String no2;
+        private Double no2;
         private String no2Cai;
-        private String o3;
+        private Double o3;
         private String o3Cai;
-        private String co;
+        private Double co;
         private String coCai;
-        private String pm25;
+        private Integer pm25;
         private String pm25Cai;
-        private String pm10;
+        private Integer pm10;
         private String pm10Cai;
     }
 }
