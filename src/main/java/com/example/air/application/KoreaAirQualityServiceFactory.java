@@ -1,5 +1,6 @@
 package com.example.air.application;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -21,8 +22,9 @@ public class KoreaAirQualityServiceFactory {
         }
     }
 
+
     public KoreaAirQualityService getService(Sido sido) {
-        return Optional.of(serviceMap.get(sido))
+        return Optional.of(serviceMap.get(sido)) //null 이 아닌경우 serviceMap에 sido값을 기준으로 service를 가져옴.
                 .orElseThrow(() -> new RuntimeException("대기질 정보를 조회할 수 없는 시/도 입니다."));
     }
 }

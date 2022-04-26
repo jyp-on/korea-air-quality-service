@@ -1,5 +1,6 @@
 package com.example.air.infrastructure.api.busan;
 
+import org.springframework.cache.annotation.Cacheable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

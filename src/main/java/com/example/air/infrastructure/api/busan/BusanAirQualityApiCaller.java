@@ -8,11 +8,19 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +46,10 @@ public class BusanAirQualityApiCaller implements KoreaAirQualityService {
         return Sido.busan;
     }
 
+
+
     @Override
+
     public AirQualityInfo getAirQualityInfo() {
         try {
             var call = busanAirQualityApi.getAirQuality();
@@ -60,6 +71,7 @@ public class BusanAirQualityApiCaller implements KoreaAirQualityService {
             throw new RuntimeException("[busan] getAirQuality API error 발생! errorMessage=" + e.getMessage());
         }
     }
+
 
     private AirQualityInfo convert(BusanAirQualityApiDto.GetAirQualityResponse response) {
         var items = response.getResponse().getItems();

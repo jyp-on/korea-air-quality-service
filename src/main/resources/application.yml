@@ -2,6 +2,10 @@ server:
   port: 8080
   shutdown: graceful
 
+spring:
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
 api:
   busan:
     base-url: http://apis.data.go.kr/6260000/
