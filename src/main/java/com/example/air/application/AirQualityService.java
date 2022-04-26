@@ -12,14 +12,21 @@ public class AirQualityService {
     private final KoreaAirQualityServiceFactory koreaAirQualityServiceFactory;
 
 
-    @Cacheable(value = "code", key = "#sido")
-    public AirQualityInfo getAirQualityInfo(Sido sido, String gu) {
+    @Cacheable(value = "sido", key = "#sido")
+    public AirQualityInfo getAirQualityInfo(Sido sido) {
         KoreaAirQualityService service = koreaAirQualityServiceFactory.getService(sido);
 
         var airQualityInfo = service.getAirQualityInfo();
-        if (gu != null) {
-            return airQualityInfo.searchByGu(gu);
-        }
+
         return airQualityInfo;
+    }
+
+    @Cacheable(value = "sido_gu", key = "#gu")
+    public AirQualityInfo getAirQualityInfo_Gu(Sido sido, String gu) {
+        KoreaAirQualityService service = koreaAirQualityServiceFactory.getService(sido);
+
+        var airQualityInfo = service.getAirQualityInfo();
+
+        return airQualityInfo.searchByGu(gu);
     }
 }

@@ -3,6 +3,7 @@ package com.example.air.application;
 import com.example.air.application.util.AirQualityGradeUtil;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +16,7 @@ public class AirQualityInfo {
     private AirQualityGrade sidoPm10AvgGrade;
     private List<GuAirQualityInfo> guList;
 
+
     public AirQualityInfo searchByGu(String gu) {
         if (gu == null) {
             return this;
@@ -24,11 +26,12 @@ public class AirQualityInfo {
         return this;
     }
 
+
     private GuAirQualityInfo searchGuAirQualityInfo(String gu) {
         return guList.stream()
                 .filter(guAirQualityInfo -> guAirQualityInfo.getGu().equals(gu))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(gu + "에 해당하는 자치구가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(gu + "no gu"));
     }
 
     @Getter

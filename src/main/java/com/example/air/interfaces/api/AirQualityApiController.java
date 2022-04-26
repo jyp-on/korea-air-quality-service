@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -24,11 +25,15 @@ public class AirQualityApiController {
     private final AirQualityService airQualityService;
 
     @GetMapping("/{sidoCode}")
-    public AirQualityInfo getAirQualityInfo(@PathVariable("sidoCode") Sido sidoCode,
-                                            @RequestParam(required = false) String gu) {
+    public AirQualityInfo getAirQualityInfo(@PathVariable("sidoCode") Sido sido,
+                                                    @RequestParam(required = false) String gu){
 
-        return airQualityService.getAirQualityInfo(sidoCode, gu);
+        if(gu != null){
+            return airQualityService.getAirQualityInfo_Gu(sido, gu);
+        }
+        return airQualityService.getAirQualityInfo(sido);
     }
+
 
 
 

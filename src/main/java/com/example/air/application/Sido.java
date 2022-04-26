@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Sido {
     seoul("서울시"),
-    busan("부산시"),
+    busan("부산시")
     ;
 
     private final String description;
