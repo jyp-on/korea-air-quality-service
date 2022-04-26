@@ -9,6 +9,4 @@ public interface BusanAirQualityApi {
     @GET("AirQualityInfoService/getAirQualityInfoClassifiedByStation?serviceKey=" + serviceKey +
             "&resultType=json&pageNo=1&numOfRows=33")
     Call<BusanAirQualityApiDto.GetAirQualityResponse> getAirQuality();
-    //Retrofit의 Call 사용
-    //Call<반환되는 객체타입>
 }

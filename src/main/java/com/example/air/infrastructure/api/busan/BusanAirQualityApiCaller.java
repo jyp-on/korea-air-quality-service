@@ -1,7 +1,7 @@
 package com.example.air.infrastructure.api.busan;
 
 import com.example.air.application.AirQualityInfo;
-import com.example.air.application.CallerService;
+import com.example.air.application.KoreaAirQualityService;
 import com.example.air.application.Sido;
 import com.example.air.application.util.AirQualityGradeUtil;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -18,13 +18,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class BusanAirQualityApiCaller implements CallerService {
+public class BusanAirQualityApiCaller implements KoreaAirQualityService {
     private final BusanAirQualityApi busanAirQualityApi;
 
     public BusanAirQualityApiCaller(@Value("${api.busan.base-url}") String baseUrl) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        //json -> POJO 변환
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -35,12 +34,12 @@ public class BusanAirQualityApiCaller implements CallerService {
     }
 
     @Override
-    public Sido getSido(){
+    public Sido getSido() {
         return Sido.busan;
     }
 
     @Override
-    public AirQualityInfo getAirQuality() {
+    public AirQualityInfo getAirQualityInfo() {
         try {
             var call = busanAirQualityApi.getAirQuality();
             var response = call.execute().body();
@@ -78,14 +77,14 @@ public class BusanAirQualityApiCaller implements CallerService {
 
     private List<AirQualityInfo.GuAirQualityInfo> convert(List<BusanAirQualityApiDto.Item> items) {
         return items.stream()
-                .map(row -> new AirQualityInfo.GuAirQualityInfo(
-                        row.getSite(),
-                        row.getPm10(),
-                        row.getPm25(),
-                        row.getO3(),
-                        row.getO3(),
-                        row.getCo(),
-                        row.getSo2())
+                .map(item -> new AirQualityInfo.GuAirQualityInfo(
+                        item.getSite(),
+                        item.getPm10(),
+                        item.getPm25(),
+                        item.getO3(),
+                        item.getO3(),
+                        item.getCo(),
+                        item.getSo2())
                 )
                 .collect(Collectors.toList());
     }

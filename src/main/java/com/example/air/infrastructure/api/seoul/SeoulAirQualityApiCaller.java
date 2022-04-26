@@ -1,7 +1,7 @@
 package com.example.air.infrastructure.api.seoul;
 
+import com.example.air.application.KoreaAirQualityService;
 import com.example.air.application.AirQualityInfo;
-import com.example.air.application.CallerService;
 import com.example.air.application.Sido;
 import com.example.air.application.util.AirQualityGradeUtil;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -9,19 +9,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class SeoulAirQualityApiCaller implements CallerService {
+public class SeoulAirQualityApiCaller implements KoreaAirQualityService {
     private final SeoulAirQualityApi seoulAirQualityApi;
 
     public SeoulAirQualityApiCaller(@Value("${api.seoul.base-url}") String baseUrl) {
@@ -37,15 +34,14 @@ public class SeoulAirQualityApiCaller implements CallerService {
     }
 
     @Override
-    public Sido getSido(){
+    public Sido getSido() {
         return Sido.seoul;
     }
 
     @Override
-    public AirQualityInfo getAirQuality() {
+    public AirQualityInfo getAirQualityInfo() {
         try {
-            String date = getDateAnHourAgo();
-            var call = seoulAirQualityApi.getAirQuality(date);
+            var call = seoulAirQualityApi.getAirQuality();
             var response = call.execute().body();
 
             if (response == null || response.getResponse() == null) {
@@ -63,10 +59,6 @@ public class SeoulAirQualityApiCaller implements CallerService {
             log.error(e.getMessage(), e);
             throw new RuntimeException("[seoul] getAirQuality API error 발생! errorMessage=" + e.getMessage());
         }
-    }
-
-    private String getDateAnHourAgo() {
-        return LocalDateTime.now().minusHours(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
 
     private AirQualityInfo convert(SeoulAirQualityApiDto.GetAirQualityResponse response) {
